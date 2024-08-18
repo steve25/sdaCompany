@@ -1,15 +1,20 @@
 package sk.pocsik.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
+@Data
 @Builder
-public record Company(String name, String id, String address, List<Person> persons) {
-    public static class CompanyBuilder {
-        CompanyBuilder() {
-            persons = new ArrayList<>();
-        }
-    }
+public class Company {
+    private String name;
+    private String id;
+    private String address;
+
+    @Builder.Default
+    private List<Person> persons = new ArrayList<>();
 }

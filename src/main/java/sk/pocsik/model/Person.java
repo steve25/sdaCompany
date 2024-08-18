@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 @Builder
 public class Person {
-    String id;
-    String name;
-    String phoneNumber;
-    String email;
-    Company company;
+    private String id;
+    private String name;
+    private String phoneNumber;
+    private String email;
+    private Company company;
 }

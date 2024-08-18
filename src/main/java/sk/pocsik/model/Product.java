@@ -1,7 +1,14 @@
 package sk.pocsik.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 
+@AllArgsConstructor
+@Data
 @Builder
-public record Product(String name, double price, Manufacturer manufacturer) {
+public class Product {
+    private String name;
+    private double price;
+    private Manufacturer manufacturer;
 }

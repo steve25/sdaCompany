@@ -7,14 +7,14 @@ public class CompanyService extends BaseService<Company> {
 
     public void addEmployee(Company company, Person employee) {
         if (employee.getCompany() != null) {
-            employee.getCompany().persons().remove(employee);
+            employee.getCompany().getPersons().remove(employee);
         }
-        company.persons().add(employee);
+        company.getPersons().add(employee);
         employee.setCompany(company);
     }
 
     public void removeEmployee(Company company, Person employee) {
-        company.persons().remove(employee);
+        company.getPersons().remove(employee);
         employee.setCompany(null);
     }
 }

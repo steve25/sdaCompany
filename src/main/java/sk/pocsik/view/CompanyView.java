@@ -53,7 +53,7 @@ public class CompanyView implements ApplicationMenu {
                 .withMaxVal(companyService.getAll().size() - 1)
                 .read("Enter the number of the company to add an employee to");
         Company company = companyService.getAt(companyIndex);
-        textIO.getTextTerminal().println("Adding an employee to company: " + company.name());
+        textIO.getTextTerminal().println("Adding an employee to company: " + company.getName());
         var persons = personService.getAll();
         textIO.getTextTerminal().println("List of all persons in system");
         for (int i = 0; i < persons.size(); i++) {
@@ -76,7 +76,7 @@ public class CompanyView implements ApplicationMenu {
                .read("Enter the number of the company to remove an employee");
 
         Company company = companyService.getAt(companyIndex);
-        List<Person> employees = company.persons();
+        List<Person> employees = company.getPersons();
 
         printEmployeesOfCompany(employees);
         Integer employeeIndex = textIO.newIntInputReader()
@@ -102,15 +102,15 @@ public class CompanyView implements ApplicationMenu {
                 .withMaxVal(companyService.getAll().size() - 1)
                 .read("Enter the number of the company to update");
         Company company = companyService.getAll().get(companyIndex);
-        textIO.getTextTerminal().println("Updating company: " + company.name());
+        textIO.getTextTerminal().println("Updating company: " + company.getName());
         textIO.getTextTerminal().print("Current details: ");
         writeCompany(companyIndex, company);
         String name = textIO.newStringInputReader()
-                .withDefaultValue(company.name())
+                .withDefaultValue(company.getName())
                 .withInputTrimming(true)
                 .read("Enter name");
         String address = textIO.newStringInputReader()
-                .withDefaultValue(company.address())
+                .withDefaultValue(company.getAddress())
                 .withInputTrimming(true)
                 .read("Enter address");
         // TODO add company
@@ -152,7 +152,7 @@ public class CompanyView implements ApplicationMenu {
             return;
         }
 
-        textIO.getTextTerminal().printf("[%d] %s, %s%n", i, company.name(), company.address());
+        textIO.getTextTerminal().printf("[%d] %s, %s%n", i, company.getName(), company.getAddress());
     }
 
     private void addCompany() {

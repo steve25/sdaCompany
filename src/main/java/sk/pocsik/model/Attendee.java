@@ -1,7 +1,15 @@
 package sk.pocsik.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 
+@AllArgsConstructor
+@Data
 @Builder
-public record Attendee(Boolean attended, Boolean succeeded, Training training, Person person) {
+public class Attendee {
+    private Boolean attended;
+    private Boolean succeeded;
+    private Training training;
+    private Person person;
 }

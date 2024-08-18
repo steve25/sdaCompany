@@ -105,7 +105,7 @@ public class PersonView implements ApplicationMenu {
         if (person.getCompany() == null) {
             companyName = "Unknown company";
         } else {
-            companyName = person.getCompany().name();
+            companyName = person.getCompany().getName();
         }
         textIO.getTextTerminal().printf("[%d] %s: %s, %s (%s)%n", seqNo, person.getName(), person.getPhoneNumber(), person.getEmail(), companyName);
     }
