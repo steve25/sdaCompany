@@ -18,12 +18,8 @@ public class CompanyService extends BaseService<Company> {
         employee.setCompany(null);
     }
 
-    public void updateCompany(Integer companyIndex, String name, String address) {
-        Company company = super.getAt(companyIndex);
-
+    public void updateCompany(Company company, String name, String address) {
         company.setName(name);
         company.setAddress(address);
-
-        super.update(companyIndex, company);
     }
 }

@@ -115,7 +115,7 @@ public class CompanyView implements ApplicationMenu {
                 .read("Enter address");
         // TODO add company
 
-        companyService.updateCompany(companyIndex, name, address);
+        companyService.updateCompany(company, name, address);
     }
 
     private void removeCompany() {

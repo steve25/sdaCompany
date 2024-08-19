@@ -64,7 +64,7 @@ public class PersonView implements ApplicationMenu {
                 .read("Enter email address");
         // TODO add company
 
-        personService.updatePerson(personIndex, name, phoneNumber, emailAddress);
+        personService.updatePerson(person, name, phoneNumber, emailAddress);
     }
 
     private void removePerson() {
