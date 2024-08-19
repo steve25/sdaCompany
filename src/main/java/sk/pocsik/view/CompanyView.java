@@ -9,17 +9,12 @@ import sk.pocsik.view.menoOptions.CompanyMenuOptions;
 
 import java.util.List;
 
-public class CompanyView implements ApplicationMenu {
-    private final TextIO textIO;
-    private final CompanyService companyService;
-    private final PersonService personService;
+public class CompanyView extends BaseView implements ApplicationMenu {
+
 
     public CompanyView(TextIO textIO, CompanyService companyService, PersonService personService) {
-        this.textIO = textIO;
-        this.companyService = companyService;
-        this.personService = personService;
+        super(textIO, companyService, personService);
     }
-
 
     @Override
     public void showMenu() {
@@ -133,25 +128,7 @@ public class CompanyView implements ApplicationMenu {
         }
     }
 
-    private void listCompanies() {
-        textIO.getTextTerminal().println();
-        textIO.getTextTerminal().println("List of all persons in system");
 
-        List<Company> companies = companyService.getAll();
-        for (int i = 0; i < companies.size(); i++) {
-            this.writeCompany(i, companies.get(i));
-        }
-        textIO.getTextTerminal().println();
-        textIO.getTextTerminal().println();
-    }
-
-    private void writeCompany(int i, Company company) {
-        if (company == null) {
-            return;
-        }
-
-        textIO.getTextTerminal().printf("[%d] %s, %s%n", i, company.getName(), company.getAddress());
-    }
 
     private void addCompany() {
         textIO.getTextTerminal().println("Add a new Company");

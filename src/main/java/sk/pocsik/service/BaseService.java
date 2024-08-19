@@ -25,4 +25,8 @@ public class BaseService <T> {
 
         return repository.remove(index);
     }
+
+    public int getIndex(T entity) {
+        return repository.indexOf(entity);
+    }
 }

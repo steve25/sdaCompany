@@ -15,7 +15,7 @@ public class Main {
         PersonService personService = new PersonService();
         CompanyService companyService = new CompanyService();
 
-        PersonView personView = new PersonView(textIO, personService);
+        PersonView personView = new PersonView(textIO, companyService, personService);
         CompanyView companyView = new CompanyView(textIO, companyService, personService);
         MainView mainView = new MainView(textIO, personView, companyView);
 

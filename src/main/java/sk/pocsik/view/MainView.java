@@ -5,13 +5,13 @@ import sk.pocsik.view.menoOptions.MainMenuOptions;
 
 public class MainView implements ApplicationMenu{
     private final TextIO textIO;
-    private final PersonView personView;
     private final CompanyView companyView;
+    private final PersonView personView;
 
     public MainView(TextIO textIO, PersonView personView, CompanyView companyView) {
         this.textIO = textIO;
-        this.personView = personView;
         this.companyView = companyView;
+        this.personView = personView;
     }
 
     @Override

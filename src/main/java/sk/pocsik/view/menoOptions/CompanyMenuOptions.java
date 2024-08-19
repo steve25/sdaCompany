@@ -8,5 +8,5 @@ public enum CompanyMenuOptions {
     FIND_COMPANY,
     ADD_PERSON,
     REMOVE_PERSON,
-    BACK;
+    BACK
 }

@@ -1,26 +1,21 @@
 package sk.pocsik.view;
 
 import org.beryx.textio.TextIO;
+import sk.pocsik.model.Company;
 import sk.pocsik.model.Person;
+import sk.pocsik.service.CompanyService;
 import sk.pocsik.service.PersonService;
 import sk.pocsik.view.menoOptions.PersonMenuOptions;
 
-import java.util.List;
-
-public class PersonView implements ApplicationMenu {
-
-    private final TextIO textIO;
-    private final PersonService personService;
-
-    public PersonView(TextIO textIO, PersonService personService) {
-        this.textIO = textIO;
-        this.personService = personService;
+public class PersonView extends BaseView implements ApplicationMenu {
+    public PersonView(TextIO textIO, CompanyService companyService, PersonService personService) {
+        super(textIO, companyService, personService);
     }
 
     @Override
     public void showMenu() {
         PersonMenuOptions selectedOption = null;
-        textIO.getTextTerminal().println("\n----------------------\nPerson Menu\n----------------------\n");
+        super.textIO.getTextTerminal().println("\n----------------------\nPerson Menu\n----------------------\n");
 
         while (selectedOption != PersonMenuOptions.BACK) {
             selectedOption = textIO.newEnumInputReader(PersonMenuOptions.class)
@@ -39,6 +34,8 @@ public class PersonView implements ApplicationMenu {
     }
 
     private void updatePerson() {
+        Company company = null;
+
         textIO.getTextTerminal().println();
         textIO.getTextTerminal().println("Updating a person");
         listPersons();
@@ -62,9 +59,26 @@ public class PersonView implements ApplicationMenu {
                 .withDefaultValue(person.getEmail())
                 .withInputTrimming(true)
                 .read("Enter email address");
-        // TODO add company
 
-        personService.updatePerson(person, name, phoneNumber, emailAddress);
+        boolean isNeedCompany = textIO.newBooleanInputReader()
+                .withDefaultValue(false)
+                .read("Wanna change a company?");
+
+        if (isNeedCompany && !companyService.getAll().isEmpty()) {
+            listCompanies();
+            int companyIndex = textIO.newIntInputReader()
+                    .withMinVal(0)
+                    .withMaxVal(companyService.getAll().size() - 1)
+                    .withDefaultValue(companyService.getIndex(person.getCompany()))
+                    .read("Enter the number of the company");
+            company = companyService.getAt(companyIndex);
+        } else {
+            textIO.getTextTerminal().println();
+            textIO.getTextTerminal().println("No company found in system.");
+            textIO.getTextTerminal().println();
+        }
+
+        personService.updatePerson(person, name, phoneNumber, emailAddress, company);
     }
 
     private void removePerson() {
@@ -82,40 +96,37 @@ public class PersonView implements ApplicationMenu {
         }
     }
 
-    private void listPersons() {
-        textIO.getTextTerminal().println();
-        textIO.getTextTerminal().println("List of all persons in system");
-
-        List<Person> persons = personService.getAll();
-        for (int i = 0; i < persons.size(); i++) {
-            this.writePersonToTerminal(i, persons.get(i));
-        }
-        textIO.getTextTerminal().println();
-        textIO.getTextTerminal().println();
-    }
-
-    private void writePersonToTerminal(Integer seqNo, Person person) {
-        if (person == null) {
-            return;
-        }
-
-        String companyName = person.getCompany() == null
-                ? "Unknown company"
-                : person.getCompany().getName();
-
-        textIO.getTextTerminal().printf("[%d] %s: %s, %s (%s)%n", seqNo, person.getName(), person.getPhoneNumber(), person.getEmail(), companyName);
-    }
-
     private void addPerson() {
+        Company company = null;
+
         textIO.getTextTerminal().println("Add a new person");
         String name = textIO.newStringInputReader().read("Enter name");
         String phone = textIO.newStringInputReader().read("Enter phone number");
         String email = textIO.newStringInputReader().read("Enter email");
+        boolean isNeedCompany = textIO.newBooleanInputReader()
+                .withDefaultValue(false)
+                .read("Add a person to company?");
 
-        personService.create(Person.builder()
+        if (isNeedCompany && !companyService.getAll().isEmpty()) {
+            listCompanies();
+            int companyIndex = textIO.newIntInputReader()
+                    .withMinVal(0)
+                    .withMaxVal(companyService.getAll().size() - 1)
+                    .read("Enter the number of the company");
+            company = companyService.getAt(companyIndex);
+        } else {
+            textIO.getTextTerminal().println();
+            textIO.getTextTerminal().println("No company found in system.");
+            textIO.getTextTerminal().println();
+        }
+        Person person = Person.builder()
                 .name(name)
                 .phoneNumber(phone)
                 .email(email)
-                .build());
+                .company(company)
+                .build();
+        companyService.addEmployee(company, person);
+
+        personService.create(person);
     }
 }
