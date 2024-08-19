@@ -26,11 +26,11 @@ public class BaseService <T> {
         return repository.remove(index);
     }
 
-    public void update(int index, T newEntity) {
+    public void update(int index, T entity) {
         if (index < 0 || index >= repository.size()) {
             throw new IllegalArgumentException("Invalid entity index: " + index);
         }
 
-        repository.set(index, newEntity);
+        repository.set(index, entity);
     }
 }

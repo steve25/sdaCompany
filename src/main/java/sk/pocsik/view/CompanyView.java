@@ -114,10 +114,8 @@ public class CompanyView implements ApplicationMenu {
                 .withInputTrimming(true)
                 .read("Enter address");
         // TODO add company
-        companyService.update(companyIndex, Company.builder()
-                .name(name)
-                .address(address)
-                .build());
+
+        companyService.updateCompany(companyIndex, name, address);
     }
 
     private void removeCompany() {

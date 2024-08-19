@@ -17,4 +17,13 @@ public class CompanyService extends BaseService<Company> {
         company.getPersons().remove(employee);
         employee.setCompany(null);
     }
+
+    public void updateCompany(Integer companyIndex, String name, String address) {
+        Company company = super.getAt(companyIndex);
+
+        company.setName(name);
+        company.setAddress(address);
+
+        super.update(companyIndex, company);
+    }
 }

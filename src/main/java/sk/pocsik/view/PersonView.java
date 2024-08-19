@@ -63,11 +63,8 @@ public class PersonView implements ApplicationMenu {
                 .withInputTrimming(true)
                 .read("Enter email address");
         // TODO add company
-        personService.update(personIndex, Person.builder()
-                .name(name)
-                .phoneNumber(phoneNumber)
-                .email(emailAddress)
-                .build());
+
+        personService.updatePerson(personIndex, name, phoneNumber, emailAddress);
     }
 
     private void removePerson() {
@@ -101,12 +98,11 @@ public class PersonView implements ApplicationMenu {
         if (person == null) {
             return;
         }
-        String companyName;
-        if (person.getCompany() == null) {
-            companyName = "Unknown company";
-        } else {
-            companyName = person.getCompany().getName();
-        }
+
+        String companyName = person.getCompany() == null
+                ? "Unknown company"
+                : person.getCompany().getName();
+
         textIO.getTextTerminal().printf("[%d] %s: %s, %s (%s)%n", seqNo, person.getName(), person.getPhoneNumber(), person.getEmail(), companyName);
     }
 
